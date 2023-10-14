@@ -12,7 +12,8 @@ with DAG(
     tags=["pipeline"],
 ) as dag:
     trigger_refresh = PowerBIDatasetRefreshOperator(
-        dataset_id = "af05a415-42ca-49b5-aee4-ac89dcb71a40"
+        dataset_id = "af05a415-42ca-49b5-aee4-ac89dcb71a40",
+        task_id = "dataset_refresh_task"
     )
     
     # (
