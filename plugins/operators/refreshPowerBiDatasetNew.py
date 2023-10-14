@@ -6,7 +6,7 @@ class PowerBIDatasetRefreshOperator(BaseOperator):
     def __init__(
         self,
         dataset_id: str,
-        group_id: str | None, 
+        group_id: None, 
         *args,
         **kwargs
     ):
