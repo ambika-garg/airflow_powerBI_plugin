@@ -1,3 +1,4 @@
+from typing import Optional
 from airflow.models import BaseOperator
 import requests
 from airflow.exceptions import AirflowException
@@ -6,7 +7,7 @@ class PowerBIDatasetRefreshOperator(BaseOperator):
     def __init__(
         self,
         dataset_id: str,
-        group_id: None, 
+        group_id: Optional[bool] = None, 
         *args,
         **kwargs
     ):
