@@ -1,7 +1,7 @@
 import datetime
 from airflow import DAG
 
-from plugins.operators.refreshPowerBiDatasetNew import PowerBIDatasetRefreshOperator
+from operators.refreshPowerBiDatasetNew import PowerBIDatasetRefreshOperator
 
 with DAG(
     dag_id="refresh_powerbi-dataset",
