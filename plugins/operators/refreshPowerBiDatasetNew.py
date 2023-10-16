@@ -3,7 +3,7 @@ from airflow.models import BaseOperator
 import requests
 from airflow.exceptions import AirflowException
 from azure.identity import ClientSecretCredential, DefaultAzureCredential
-from azure.mgmt.powerbidedicated import PowerBIDedicated
+# from azure.mgmt.powerbidedicated import PowerBIDedicated
 
 Credentials = Union[ClientSecretCredential, DefaultAzureCredential]
 
