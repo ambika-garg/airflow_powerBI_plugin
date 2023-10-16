@@ -33,7 +33,7 @@ class PowerBIDatasetRefreshOperator(BaseOperator):
 
         # PowerBIDedicated(credential= credential, subscription_id="222f1459-6ebd-4896-82ab-652d5f6883cf")
  
-        access_token = credential.get_token('https://analysis.windows.net/powerbi/api').token
+        access_token = credential.get_token('https://analysis.windows.net/powerbi/api/.default').token
         headers = {'Authorization': f'Bearer {access_token}'}
 
         response = requests.get('https://api.powerbi.com/v1.0/myorg/datasets', headers=headers)
