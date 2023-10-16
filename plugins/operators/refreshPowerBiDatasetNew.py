@@ -37,8 +37,8 @@ class PowerBIDatasetRefreshOperator(BaseOperator):
         headers = {'Authorization': f'Bearer {access_token}'}
 
         response = requests.get('https://api.powerbi.com/v1.0/myorg/datasets', headers=headers)
-        datasets = response.json()
-        self.log.info(datasets)
+        self.log.info(access_token)
+        self.log.info(response)
 
 
 
