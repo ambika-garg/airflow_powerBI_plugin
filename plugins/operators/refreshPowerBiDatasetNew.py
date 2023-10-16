@@ -3,6 +3,7 @@ from airflow.models import BaseOperator
 import requests
 from airflow.exceptions import AirflowException
 from azure.identity import ClientSecretCredential, DefaultAzureCredential
+from azure.mgmt.powerbidedicated import PowerBIDedicated
 
 Credentials = Union[ClientSecretCredential, DefaultAzureCredential]
 
@@ -22,36 +23,53 @@ class PowerBIDatasetRefreshOperator(BaseOperator):
         """
         Refresh the Power BI Dataset
         """
-        self.refresh_dataset(self.dataset_id)
+        # self.refresh_dataset(self.dataset_id)
+        credential: Credentials
+        credential = ClientSecretCredential(
+            client_id="67ae3905-1d42-404e-a20a-b6d51b28617c",
+            client_secret="eBe8Q~n8DK-xQVB2_VsRmmU1SGZ.Qm6kN.zpgcfw",
+            tenant_id="72f988bf-86f1-41af-91ab-2d7cd011db47"
+        )
 
-    def refresh_dataset(self, dataset_id: str) -> None:
-        """
-        Triggers a refresh for the specified dataset from "My Workspace".
-        """
-        url = f'https://api.powerbi.com/v1.0/myorg'
+        # PowerBIDedicated(credential= credential, subscription_id="222f1459-6ebd-4896-82ab-652d5f6883cf")
+ 
+        access_token = credential.get_token('https://analysis.windows.net/powerbi/api').token
+        headers = {'Authorization': f'Bearer {access_token}'}
 
-        # Add the dataset key
-        url += f'/datasets/{dataset_id}/refreshes'
+        response = requests.get('https://api.powerbi.com/v1.0/myorg/datasets', headers=headers)
+        datasets = response.json()['value']
+        self.log.info(datasets)
 
-        self._send_request(url=url)
 
-    def _send_request(self,
-                      url: str,
-                      **kwargs) -> requests.Response:
-        """
-        Send a request to the Power BI REST API.
 
-        :param url: The URL against which the request needs to be made.
-        :return: requests.Response
-        """
+    # def refresh_dataset(self, dataset_id: str) -> None:
+    #     """
+    #     Triggers a refresh for the specified dataset from "My Workspace".
+    #     """
+    #     url = f'https://api.powerbi.com/v1.0/myorg'
 
-        self.header = {'Authorization': f'Bearer {self._get_token()}'}
+    #     # Add the dataset key
+    #     url += f'/datasets/{dataset_id}/refreshes'
 
-        r = requests.post(url=url, headers=self.header, **kwargs)
-        r.raise_for_status()
-        return r
+    #     self._send_request(url=url)
 
-    def _get_token(self) -> str:
+    # def _send_request(self,
+    #                   url: str,
+    #                   **kwargs) -> requests.Response:
+    #     """
+    #     Send a request to the Power BI REST API.
+
+    #     :param url: The URL against which the request needs to be made.
+    #     :return: requests.Response
+    #     """
+
+    #     self.header = {'Authorization': f'Bearer {self._get_token()}'}
+
+    #     r = requests.post(url=url, headers=self.header, **kwargs)
+    #     r.raise_for_status()
+    #     return r
+
+    # def _get_token(self) -> str:
         """
         Retrieve the `access token` used to authenticate against the API.
         """
