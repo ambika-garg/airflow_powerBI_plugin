@@ -22,7 +22,7 @@ class PowerBIDatasetRefreshOperator(BaseOperator):
         """
         Refresh the Power BI Dataset
         """
-        self.refresh_dataset(self.dataset_id, self.group_id)
+        self.refresh_dataset(self.dataset_id)
 
     def refresh_dataset(self, dataset_id: str) -> None:
         """
