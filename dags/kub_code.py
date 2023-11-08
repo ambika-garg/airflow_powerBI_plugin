@@ -2,8 +2,6 @@ from kubernetes.client import models as k8s
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
 from airflow.utils.dates import days_ago
-from airflow.hooks.base_hook import BaseHook
-from airflow.contrib.operators.slack_webhook_operator import SlackWebhookOperator
 
 default_args = {
     'owner': 'airflow'
@@ -21,7 +19,7 @@ with DAG(
 
     k = KubernetesPodOperator(
         namespace='default',
-        image="samples/hello-world:latest",
+        image="ambikakubernetesclusterregistry.azurecr.io/samples/hello-world:latest",
         image_pull_secrets=[k8s.V1LocalObjectReference("testquay")],        
         name="k8s-pod",
         task_id="task",
