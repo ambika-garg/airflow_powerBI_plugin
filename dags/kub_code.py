@@ -21,7 +21,7 @@ with DAG(
 
     k = KubernetesPodOperator(
         namespace='default',
-        image="ambikagarg1101/ambikadockerrepo:latest",
+        image="samples/hello-world:latest",
         image_pull_secrets=[k8s.V1LocalObjectReference("testquay")],        
         name="k8s-pod",
         task_id="task",
